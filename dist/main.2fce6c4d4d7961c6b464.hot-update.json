@@ -1,0 +1,1 @@
+{"c":["main"],"r":[],"m":["./src/ticket-crud-mongo.ts","./src/ticket-schema.ts","./src/user-crud-mongo.ts","./src/user-schema.ts","cors","dotenv","express","helmet","mongoose"]}

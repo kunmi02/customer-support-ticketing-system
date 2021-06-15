@@ -3,7 +3,9 @@ import express from 'express';
 import * as dotenv from "dotenv";
 import mongoose from 'mongoose';
 import helmet from "helmet";
-import * as ticketCRUD from './ticket-crud';
+
+import * as ticketCRUD from './ticket-crud-mongo'; 
+import * as userCRUD from './user-crud-mongo';
 
 dotenv.config();
 
@@ -11,6 +13,16 @@ if (!process.env.PORT) {
   console.log(`Error to get ports`);
     process.exit(1);
  }
+
+ const uri: string = "mongodb://127.0.0.1:27017/";
+
+mongoose.connect(uri, (err: any) => {
+  if (err) {
+    console.log(err.message);
+  } else {
+    console.log(`Connected to db`);
+  }
+});
 
  const PORT: number = parseInt(process.env.PORT as string, 10);
  
@@ -28,7 +40,8 @@ const server = app.listen(PORT, () => {
 app.get('/', (req, res) => res.send('Welcome to NodeJs App using TypeScript'));
 
 
-app.get('/tickets', ticketCRUD.getProductList);
-// app.post('/products',productCRUD.createProduct);
-// app.post('/updateproduct',productCRUD.updateroduct);
-// app.post('/deleteproduct',productCRUD.deleteproduct);
+app.get('/tickets', ticketCRUD.getTicket);
+app.post('/tickets',ticketCRUD.createTicket);
+app.post('/users', userCRUD.createUser)
+app.get('/users', userCRUD.getUsers)
+app.get('/user-ticket', userCRUD.getUserTicket)
